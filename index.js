@@ -1,4 +1,4 @@
-const Shape = require("./lib/shapes.js");
+const { Circle, Triangle, Square } = require("./lib/shapes.js");
 const inquirer = require("inquirer");
 const fs = require("fs");
 
@@ -9,9 +9,9 @@ const questions = [
         name: "chars"
     },
     {
-        message:"What color would you like those characters to be? You can enter a color code or hex code.",
+        message:"What color would you like those characters to be? Hex values are accepted.",
         type: "input",
-        name: "textcolor"
+        name: "textColor"
     },
     {
         message:"What shape would you like the background to be?",
@@ -20,21 +20,28 @@ const questions = [
         choices: ["Circle", "Triangle", "Square"]
     },
     {
-        message:"What color would you like the shape to be?",
+        message:"What color would you like the shape to be? Hex values are accepted",
         type: "input",
-        name: "shapecolor"
+        name: "shapeColor"
     },
 ]
 
-function generateSVG(shape) {
-
+function generateSVG({ chars, textColor, shape, shapeColor}) {
+    switch (shape) {
+        case 'Circle':
+            return new Circle(shapeColor, chars, textColor)
+        case 'Triangle':
+            return new Triangle(shapeColor, chars, textColor)
+        case 'Square':
+            return new Square(shapeColor, chars, textColor)
+    }
 }
 
 function init(questionArray) {
     inquirer.prompt(questionArray)
         .then((responses) => {
             console.log(responses)
-            fs.writeFileSync("./examples/logo.svg", //the rendered shape,
+            fs.writeFileSync("./examples/logo.svg", generateSVG(responses).render(),
              (err) =>
                 err ? console.error(err) : console.log('Success!'))
 })
