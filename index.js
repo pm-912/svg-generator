@@ -1,7 +1,6 @@
-const shapes = require("./lib/shapes.js");
+const Shape = require("./lib/shapes.js");
 const inquirer = require("inquirer");
 const fs = require("fs");
-const shape = new Shape;
 
 const questions = [
     {
@@ -27,11 +26,15 @@ const questions = [
     },
 ]
 
+function generateSVG(shape) {
+
+}
+
 function init(questionArray) {
     inquirer.prompt(questionArray)
         .then((responses) => {
             console.log(responses)
-            fs.writeFileSync("./examples/logo.svg", render(chosenShape),
+            fs.writeFileSync("./examples/logo.svg", //the rendered shape,
              (err) =>
                 err ? console.error(err) : console.log('Success!'))
 })
