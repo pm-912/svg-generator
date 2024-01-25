@@ -1,5 +1,7 @@
 const shapes = require("./lib/shapes.js");
 const inquirer = require("inquirer");
+const fs = require("fs");
+const shape = new Shape;
 
 const questions = [
     {
@@ -13,10 +15,10 @@ const questions = [
         name: "textcolor"
     },
     {
-        message:"What shape would you like the text to appear on top of?",
+        message:"What shape would you like the background to be?",
         type: "list",
         name: "shape",
-        choices: ["circle", "triangle", "square"]
+        choices: ["Circle", "Triangle", "Square"]
     },
     {
         message:"What color would you like the shape to be?",
@@ -29,9 +31,9 @@ function init(questionArray) {
     inquirer.prompt(questionArray)
         .then((responses) => {
             console.log(responses)
-//             fs.writeFileSync("logo.svg", //content of file,
-//              (err) =>
-//                 err ? console.error(err) : console.log('Success!'))
+            fs.writeFileSync("./examples/logo.svg", render(chosenShape),
+             (err) =>
+                err ? console.error(err) : console.log('Success!'))
 })
         .catch ((error) => {
     console.error(error)
