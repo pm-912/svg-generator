@@ -1,5 +1,6 @@
-const shapes = require("./lib/shapes.js");
+const { Circle, Triangle, Square } = require("./lib/shapes.js");
 const inquirer = require("inquirer");
+const fs = require("fs");
 
 const questions = [
     {
@@ -8,30 +9,41 @@ const questions = [
         name: "chars"
     },
     {
-        message:"What color would you like those characters to be? You can enter a color code or hex code.",
+        message:"What color would you like those characters to be? Hex values are accepted.",
         type: "input",
-        name: "textcolor"
+        name: "textColor"
     },
     {
-        message:"What shape would you like the text to appear on top of?",
+        message:"What shape would you like the background to be?",
         type: "list",
         name: "shape",
-        choices: ["circle", "triangle", "square"]
+        choices: ["Circle", "Triangle", "Square"]
     },
     {
-        message:"What color would you like the shape to be?",
+        message:"What color would you like the shape to be? Hex values are accepted",
         type: "input",
-        name: "shapecolor"
+        name: "shapeColor"
     },
 ]
+
+function generateSVG({ chars, textColor, shape, shapeColor}) {
+    switch (shape) {
+        case 'Circle':
+            return new Circle(shapeColor, chars, textColor)
+        case 'Triangle':
+            return new Triangle(shapeColor, chars, textColor)
+        case 'Square':
+            return new Square(shapeColor, chars, textColor)
+    }
+}
 
 function init(questionArray) {
     inquirer.prompt(questionArray)
         .then((responses) => {
             console.log(responses)
-//             fs.writeFileSync("logo.svg", //content of file,
-//              (err) =>
-//                 err ? console.error(err) : console.log('Success!'))
+            fs.writeFileSync("./examples/logo.svg", generateSVG(responses).render(),
+             (err) =>
+                err ? console.error(err) : console.log('Success!'))
 })
         .catch ((error) => {
     console.error(error)
