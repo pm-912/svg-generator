@@ -2,6 +2,7 @@ const { Circle, Triangle, Square } = require("./lib/shapes.js");
 const inquirer = require("inquirer");
 const fs = require("fs");
 
+// Array of questions for the user
 const questions = [
     {
         message:"Please enter three characters that you'd like to display.",
@@ -26,6 +27,7 @@ const questions = [
     },
 ]
 
+// This function creates the new shape based on user input
 function generateSVG({ chars, textColor, shape, shapeColor}) {
     switch (shape) {
         case 'Circle':
@@ -37,6 +39,9 @@ function generateSVG({ chars, textColor, shape, shapeColor}) {
     }
 }
 
+// This function is invoked when the user runs when node index.js
+// It will ask the questions in the command line, and take the answers
+// and generate an SVG with those properties. This is then written to a new file
 function init(questionArray) {
     inquirer.prompt(questionArray)
         .then((responses) => {
