@@ -24,4 +24,4 @@ Xpert Learning Assistant
 The user must be able to use their command line interface,
 as well as have node, inquirer, and jest installed.
 
-[A video demonstration of the application]()
+[A video demonstration of the application](https://drive.google.com/file/d/1JLYRGdXcE8naul8pSdfAFow12sC09ivH/view)
